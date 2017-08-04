@@ -14,7 +14,7 @@ parser.add_argument('url', help='URL of remote endpoint to check.')
 
 args = parser.parse_args()
 
-response = urllib2.urlopen(args.url)
+response = urllib2.urlopen(args.url) # nosec
 data = json.load(response)   
 
 if 'count' in data:
