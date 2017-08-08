@@ -83,10 +83,13 @@ def zombie_processes(request): # pylint: disable=unused-argument
     zombie_count = 0
 
     for pid in psutil.pids():
-        process = psutil.Process(pid=pid)
+        try:
+            process = psutil.Process(pid=pid)
 
-        if process.status() == psutil.STATUS_ZOMBIE:
-            zombie_count += 1
+            if process.status() == psutil.STATUS_ZOMBIE:
+                zombie_count += 1
+        except psutil.AccessDenied:
+            pass
 
     payload = {
         'count': zombie_count
