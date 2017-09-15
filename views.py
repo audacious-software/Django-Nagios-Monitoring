@@ -90,6 +90,8 @@ def zombie_processes(request): # pylint: disable=unused-argument
                 zombie_count += 1
         except psutil.AccessDenied:
             pass
+        except psutil.NoSuchProcess:
+            pass
 
     payload = {
         'count': zombie_count
