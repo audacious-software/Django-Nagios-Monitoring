@@ -42,7 +42,7 @@ def cpu_load(request): # pylint: disable=unused-argument
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \
-                        status=201)
+                        status=200)
 
 @allowed_host
 def current_users(request): # pylint: disable=unused-argument
@@ -52,7 +52,7 @@ def current_users(request): # pylint: disable=unused-argument
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \
-                        status=201)
+                        status=200)
 
 @allowed_host
 def disk_usage(request): # pylint: disable=unused-argument
@@ -67,7 +67,7 @@ def disk_usage(request): # pylint: disable=unused-argument
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \
-                        status=201)
+                        status=200)
 
 @allowed_host
 def total_processes(request): # pylint: disable=unused-argument
@@ -77,7 +77,7 @@ def total_processes(request): # pylint: disable=unused-argument
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \
-                        status=201)
+                        status=200)
 @allowed_host
 def zombie_processes(request): # pylint: disable=unused-argument
     zombie_count = 0
@@ -99,4 +99,4 @@ def zombie_processes(request): # pylint: disable=unused-argument
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \
-                        status=201)
+                        status=200)
