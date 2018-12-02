@@ -1,4 +1,4 @@
-Django==1.11.1
+Django==1.11.16
 psutil==5.2.2
 pylint==1.7.1
 bandit==1.4.0
