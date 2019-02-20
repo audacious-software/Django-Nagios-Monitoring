@@ -1,5 +1,5 @@
 Django==1.11.20
-psutil==5.2.2
-pylint==1.7.1
+psutil==5.4.7
+pylint==1.9.4
 bandit==1.4.0
 psycopg2-binary==2.7.6
