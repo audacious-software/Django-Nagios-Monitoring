@@ -1,5 +1,6 @@
-Django==1.11.20
-psutil==5.4.7
+Django==1.11.21
+psutil==5.6.1
+psycopg2-binary==2.8.3
 pylint==1.9.4
-bandit==1.4.0
-psycopg2-binary==2.7.6
+bandit==1.5.1
+
