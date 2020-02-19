@@ -61,9 +61,10 @@ def disk_usage(request): # pylint: disable=unused-argument
     partitions = psutil.disk_partitions()
 
     for partition in partitions:
-        usage = psutil.disk_usage(partition.mountpoint)
+        if ('/dev/loop' in partition.device) is False:
+            usage = psutil.disk_usage(partition.mountpoint)
 
-        payload[partition.device] = usage.percent
+            payload[partition.device] = usage.percent
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \
