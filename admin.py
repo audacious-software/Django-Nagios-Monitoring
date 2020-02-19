@@ -1,3 +1,5 @@
+# pylint: disable=line-too-long
+
 from django.contrib import admin
 
 from .models import ScheduledEvent
