@@ -1,3 +1,5 @@
+# pylint: disable=no-member
+
 import json
 
 import psutil
@@ -5,6 +7,8 @@ import psutil
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
+
+from .models import ScheduledEvent
 
 def allowed_host(function):
     def wrap(request, *args, **kwargs):
@@ -96,6 +100,28 @@ def zombie_processes(request): # pylint: disable=unused-argument
 
     payload = {
         'count': zombie_count
+    }
+
+    return HttpResponse(json.dumps(payload, indent=2), \
+                        content_type='application/json', \
+                        status=200)
+
+
+@allowed_host
+def background_jobs(request): # pylint: disable=unused-argument
+    warnings = []
+    errors = []
+
+    for event in ScheduledEvent.objects.all():
+        if event.is_error():
+            errors.append(event.event_name)
+        elif event.is_warning():
+            warnings.append(event.event_name)
+
+
+    payload = {
+        'errors': errors,
+        'warnings': warnings,
     }
 
     return HttpResponse(json.dumps(payload, indent=2), \

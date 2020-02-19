@@ -1,6 +1,9 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from django.contrib import admin
 
-# from django.contrib import admin
+from .models import ScheduledEvent
 
-# Register your models here.
+@admin.register(ScheduledEvent)
+class ScheduledEventAdmin(admin.ModelAdmin):
+    list_display = ('event_name', 'last_seen', 'warning_minutes', 'error_minutes', 'is_warning', 'is_error')
+    search_fields = ('event_name',)
+    list_filter = ('last_seen',)
