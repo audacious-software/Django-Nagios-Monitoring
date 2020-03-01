@@ -3,7 +3,7 @@ backports.functools-lru-cache==1.6.1
 bandit==1.6.2
 configparser==4.0.2
 Django==1.11.28
-enum34==1.1.6
+enum34==1.1.9
 futures==3.3.0
 gitdb2==2.0.6
 GitPython==2.1.15
@@ -18,6 +18,7 @@ pytz==2019.3
 PyYAML==5.3
 singledispatch==3.4.0.3
 six==1.14.0
-smmap2==2.0.5
+smmap==3.0.1
+smmap2==3.0.1
 stevedore==1.32.0
 wrapt==1.12.0
