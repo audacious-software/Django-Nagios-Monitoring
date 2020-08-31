@@ -1,18 +1,17 @@
-dist: trusty
-
-env:
+dist: bionic
 
 language: python
 
 python:
   - 2.7
+  - 3.5
 
 addons:
   postgresql: 9.5
   apt:
     packages:
     - spatialite-bin
-    - postgresql-9.5-postgis-2.3
+    - postgresql-9.5-postgis-2.4
   
 before_install:
   - export PYTHONPATH=$HOME/builds/audaciouscode/pdk
