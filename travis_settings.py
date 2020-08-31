@@ -72,8 +72,7 @@ DATABASES = {
 }
 
 if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.spatialite'
-#     SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -88,7 +87,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+TABASES
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
