@@ -17,5 +17,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^monitor/', include('nagios_monitor.urls')),
+    url(r'^monitor/', include(nagios_monitor.urls)),
 ]
