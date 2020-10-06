@@ -15,6 +15,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+import nagios_monitor
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^monitor/', include(nagios_monitor.urls)),
