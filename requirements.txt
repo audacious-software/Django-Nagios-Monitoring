@@ -13,8 +13,9 @@ pbr==5.4.4
 psutil==5.7.0
 psycopg2-binary==2.8.4
 pylint==1.9.5
-pytz==2019.3
-PyYAML==5.4
+pytz==2021.1
+PyYAML==5.4.1; python_version < '3.0'
+PyYAML==5.4.1; python_version >= '3.0'
 singledispatch==3.4.0.3
 six==1.14.0
 smmap==3.0.1
