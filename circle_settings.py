@@ -1,7 +1,7 @@
 # pylint: skip-file
 
 """
-Settings.py for testing on Travis CI.
+Settings.py for testing on Circle CI.
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -40,7 +40,7 @@ MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'nagios_monitor.travis_urls'
+ROOT_URLCONF = 'nagios_monitor.circle_urls'
 
 TEMPLATES = [
     {
@@ -63,8 +63,8 @@ WSGI_APPLICATION = 'pdk.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE':   'django.db.backends.postgresql_psycopg2',
-        'NAME':     'travisci',
-        'USER':     'postgres',
+        'NAME':     'circle_test',
+        'USER':     'root',
         'PASSWORD': '',
         'HOST':     'localhost',
         'PORT':     '',
