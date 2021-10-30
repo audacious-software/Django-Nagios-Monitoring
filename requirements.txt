@@ -11,5 +11,3 @@ pytz==2021.3
 PyYAML==5.4.1; python_version < '3.0'
 PyYAML==5.4.1; python_version >= '3.0'
 six==1.16.0
-smmap==3.0.5; python_version < '3.0'
-smmap==4.0.0; python_version >= '3.0'
