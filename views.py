@@ -67,8 +67,11 @@ def disk_usage(request): # pylint: disable=unused-argument
     for partition in partitions:
         if ('/dev/loop' in partition.device) is False:
             usage = psutil.disk_usage(partition.mountpoint)
-
-            payload[partition.device] = usage.percent
+            
+            if hasattr(settings, 'NAGIOS_MONITOR_IGNORE_DISKS') and partition.device in settings.NAGIOS_MONITOR_IGNORE_DISKS:
+                pass
+            else:
+                payload[partition.device] = usage.percent
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \
