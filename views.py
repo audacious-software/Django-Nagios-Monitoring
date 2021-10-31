@@ -1,4 +1,4 @@
-# pylint: disable=no-member
+# pylint: disable=no-member, line-too-long
 
 import json
 
@@ -67,7 +67,7 @@ def disk_usage(request): # pylint: disable=unused-argument
     for partition in partitions:
         if ('/dev/loop' in partition.device) is False:
             usage = psutil.disk_usage(partition.mountpoint)
-            
+
             if hasattr(settings, 'NAGIOS_MONITOR_IGNORE_DISKS') and partition.device in settings.NAGIOS_MONITOR_IGNORE_DISKS:
                 pass
             else:
