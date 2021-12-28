@@ -1,7 +1,7 @@
 # pylint: skip-file
 
 """
-Settings.py for testing on Travis CI.
+Settings.py for testing on Circle CI.
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,22 +26,21 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis',
     'nagios_monitor'
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'nagios_monitor.travis_urls'
+ROOT_URLCONF = 'nagios_monitor.circle_urls'
 
 TEMPLATES = [
     {
@@ -63,9 +62,9 @@ WSGI_APPLICATION = 'pdk.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE':   'django.contrib.gis.db.backends.postgis',
-        'NAME':     'travisci',
-        'USER':     'postgres',
+        'ENGINE':   'django.db.backends.postgresql_psycopg2',
+        'NAME':     'circle_test',
+        'USER':     'root',
         'PASSWORD': '',
         'HOST':     'localhost',
         'PORT':     '',
@@ -73,8 +72,7 @@ DATABASES = {
 }
 
 if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.spatialite'
-#     SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -88,7 +86,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
