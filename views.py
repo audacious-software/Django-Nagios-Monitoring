@@ -1,5 +1,6 @@
 # pylint: disable=no-member, line-too-long
 
+import importlib
 import json
 
 import psutil
@@ -128,6 +129,30 @@ def background_jobs(request): # pylint: disable=unused-argument
     payload = {
         'errors': errors,
         'warnings': warnings,
+    }
+
+    return HttpResponse(json.dumps(payload, indent=2), \
+                        content_type='application/json', \
+                        status=200)
+
+@allowed_host
+def other_issues(request): # pylint: disable=unused-argument
+    issues = []
+
+    for app in settings.INSTALLED_APPS:
+        try:
+            monitor_module = importlib.import_module('.monitoring_api', package=app)
+
+            for issue in monitor_module.issues():
+                issues.append(('%s: %s' % (app, issue)))
+        except ImportError:
+            pass
+        except AttributeError:
+            pass
+
+
+    payload = {
+        'issues': issues,
     }
 
     return HttpResponse(json.dumps(payload, indent=2), \
