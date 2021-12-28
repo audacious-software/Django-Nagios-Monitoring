@@ -8,7 +8,7 @@ import argparse
 import json
 import sys
 
-import urllib.request, urllib.error, urllib.parse
+import urllib2
 
 CRITICAL = 5
 WARNING = 1
@@ -19,7 +19,7 @@ parser.add_argument('url', help='URL of remote endpoint.')
 
 args = parser.parse_args()
 
-response = urllib.request.urlopen(args.url) # nosec
+response = urllib2.urlopen(args.url) # nosec
 data = json.load(response)   
 
 if 'count' in data:
