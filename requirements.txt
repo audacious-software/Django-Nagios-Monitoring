@@ -1,5 +1,6 @@
 backports.functools-lru-cache==1.6.1
-bandit==1.7.2; python_version >= '3.0'
+bandit==1.7.3; python_version >= '3.7'
+bandit==1.7.1; python_version >= '3.0'
 bandit==1.6.2; python_version < '3.0'
 configparser==4.0.2
 Django==1.11.29; python_version < '3.0'
@@ -7,7 +8,6 @@ Django==3.2.12; python_version >= '3.0'
 gitdb2==2.0.6
 GitPython==2.1.15
 isort==4.3.21
-lazy-object-proxy==1.4.3
 mccabe==0.6.1
 pbr==5.8.0
 psutil==5.8.0
