@@ -1,8 +1,10 @@
-# pylint: disable=no-member
+# pylint: disable=no-member, line-too-long
 # -*- coding: utf-8 -*-
 
 import datetime
 
+from django.conf import settings
+from django.core.checks import Warning, register # pylint: disable=redefined-builtin
 from django.db import models
 from django.utils import timezone
 
@@ -43,3 +45,13 @@ class ScheduledEvent(models.Model):
         match.last_seen = last_seen
 
         match.save()
+
+
+@register()
+def nagios_monitor_is_debug(app_configs, **kwargs): # pylint: disable=unused-argument
+    errors = []
+
+    if settings.DEBUG:
+        errors.append(Warning('settings.DEBUG is True', hint='Set to False to take site out of debug mode.', obj=None, id='nagios_monitor.W001'))
+
+    return errors
