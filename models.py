@@ -54,13 +54,13 @@ def nagios_monitor_deploy_checks(app_configs, **kwargs): # pylint: disable=unuse
     deploy_checks = registry.registry.deployment_checks
 
     for check in deploy_checks:
-        new_errors = check(app_configs=app_configs)
+        check_errors = check(app_configs=app_configs)
 
-        for error in new_errors:
+        for error in check_errors:
             if (error.id in settings.SILENCED_SYSTEM_CHECKS) is False:
                 errors.append(error)
 
-    if len(errors) > 0:
+    if len(errors) > 0: # pylint: disable=len-as-condition
         errors.append(Warning('Detected unresolved (or unsilenced) deployment checks.', hint='Address issue or silence checks in SILENCED_SYSTEM_CHECKS.', obj=None, id='nagios_monitor.W001'))
 
     return errors
