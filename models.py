@@ -4,7 +4,7 @@
 import datetime
 
 from django.conf import settings
-from django.core.checks import Warning, register # pylint: disable=redefined-builtin
+from django.core.checks import Warning, register, registry # pylint: disable=redefined-builtin
 from django.db import models
 from django.utils import timezone
 
@@ -48,10 +48,19 @@ class ScheduledEvent(models.Model):
 
 
 @register()
-def nagios_monitor_is_debug(app_configs, **kwargs): # pylint: disable=unused-argument
+def nagios_monitor_deploy_checks(app_configs, **kwargs): # pylint: disable=unused-argument
     errors = []
 
-    if settings.DEBUG:
-        errors.append(Warning('settings.DEBUG is True', hint='Set to False to take site out of debug mode.', obj=None, id='nagios_monitor.W001'))
+    deploy_checks = registry.registry.deployment_checks
+
+    for check in deploy_checks:
+        new_errors = check(app_configs=app_configs)
+
+        for error in new_errors:
+            if (error.id in settings.SILENCED_SYSTEM_CHECKS) is False:
+                errors.append(error)
+
+    if len(errors) > 0:
+        errors.append(Warning('Detected unresolved (or unsilenced) deployment checks.', hint='Address issue or silence checks in SILENCED_SYSTEM_CHECKS.', obj=None, id='nagios_monitor.W001'))
 
     return errors
