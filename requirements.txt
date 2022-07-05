@@ -4,7 +4,7 @@ bandit==1.7.1; python_version == '3.6'
 bandit==1.6.2; python_version < '3.0'
 configparser==4.0.2
 Django==1.11.29; python_version < '3.0'
-Django==3.2.13; python_version >= '3.0'
+Django==3.2.14; python_version >= '3.0'
 gitdb2==2.0.6
 GitPython==2.1.15
 isort==4.3.21
