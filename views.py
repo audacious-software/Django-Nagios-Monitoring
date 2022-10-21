@@ -1,13 +1,19 @@
 # pylint: disable=no-member, line-too-long
 
+import datetime
 import importlib
 import json
+import os
 
+import boto3
 import psutil
+
+from botocore.config import Config
 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
+from django.utils import timezone
 
 from .models import ScheduledEvent
 
@@ -154,6 +160,96 @@ def other_issues(request): # pylint: disable=unused-argument
     payload = {
         'issues': issues,
     }
+
+    return HttpResponse(json.dumps(payload, indent=2), \
+                        content_type='application/json', \
+                        status=200)
+
+# @allowed_host
+def aws_ec2_remaining_credits(request, instance_id): # pylint: disable=unused-argument, too-many-locals
+    proceed = True
+
+    warnings = []
+
+    if hasattr(settings, 'MONITOR_AWS_REGION') is False:
+        warnings.append('Missing MONITOR_AWS_REGION settings parameter.')
+
+        proceed = False
+
+    if hasattr(settings, 'MONITOR_AWS_ACCESS_KEY_ID') is False:
+        warnings.append('Missing MONITOR_AWS_ACCESS_KEY_ID settings parameter.')
+
+        proceed = False
+
+    if hasattr(settings, 'MONITOR_AWS_SECRET_ACCESS_KEY') is False:
+        warnings.append('Missing MONITOR_AWS_SECRET_ACCESS_KEY settings parameter.')
+
+        proceed = False
+
+    payload = {
+        'credits_remaining': 0,
+        'warnings': warnings
+    }
+
+    if proceed:
+        end = timezone.now()
+        start = end - datetime.timedelta(days=7)
+
+        aws_config = Config(
+            region_name=settings.MONITOR_AWS_REGION,
+            retries={'max_attempts': 10, 'mode': 'standard'}
+        )
+
+        os.environ['AWS_ACCESS_KEY_ID'] = settings.MONITOR_AWS_ACCESS_KEY_ID
+        os.environ['AWS_SECRET_ACCESS_KEY'] = settings.MONITOR_AWS_SECRET_ACCESS_KEY
+
+        client = boto3.client('cloudwatch', config=aws_config)
+
+        client = boto3.client('cloudwatch', config=aws_config)
+
+        response = client.get_metric_statistics(
+            Namespace='AWS/EC2',
+            MetricName='CPUCreditBalance',
+            Dimensions=[{
+                'Name': 'InstanceId',
+                'Value': instance_id
+                },],
+            StartTime=start,
+            EndTime=end,
+            Period=3600,
+            Statistics=[
+                'Minimum',
+                'Maximum',
+                'Average',
+            ],
+            Unit='Count'
+        )
+
+        largest_maximum = 0
+        latest_average = 0
+        latest_recording = None
+
+        for datapoint in response.get('Datapoints', []):
+            if latest_recording is None:
+                latest_recording = datapoint.get('Timestamp', None)
+
+            when = datapoint.get('Timestamp', None)
+            average = datapoint.get('Average', 0)
+            maximum = datapoint.get('Maximum', 0)
+
+            if when > latest_recording:
+                latest_recording = when
+
+                latest_average = average
+
+            if maximum > largest_maximum:
+                largest_maximum = maximum
+
+        if largest_maximum > 0:
+            payload['credits_remaining'] = latest_average / largest_maximum
+
+        payload['latest_balance'] = latest_average
+        payload['maximum_observed'] = largest_maximum
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \

@@ -2,7 +2,8 @@
 
 from django.conf.urls import url
 
-from .views import cpu_load, current_users, disk_usage, total_processes, zombie_processes, background_jobs, other_issues
+from .views import cpu_load, current_users, disk_usage, total_processes, zombie_processes, \
+                   background_jobs, other_issues, aws_ec2_remaining_credits
 
 urlpatterns = [
     url(r'^cpu-load.json$', cpu_load, name='nagios_monitor_cpu_load'),
@@ -12,4 +13,5 @@ urlpatterns = [
     url(r'^zombie-processes.json$', zombie_processes, name='nagios_monitor_zombie_processes'),
     url(r'^background-jobs.json$', background_jobs, name='nagios_monitor_background_jobs'),
     url(r'^other-issues.json$', other_issues, name='nagios_monitor_other_issues'),
+    url(r'^ec2/(?P<instance_id>.+)/remaining-credits.json$', aws_ec2_remaining_credits, name='aws_ec2_remaining_credits'),
 ]
