@@ -24,13 +24,13 @@ data = json.load(response)
 
 if 'credits_remaining' in data:
     if data['credits_remaining'] < CRITICAL:
-        print('CPU CREDIT BALANCE CRITICAL: %.3f / %.3f' % (data.get('latest_balance', 0), data.get('maximum_observed', 0))
+        print('CPU CREDIT BALANCE CRITICAL: %.3f / %.3f' % (data.get('latest_balance', 0), data.get('maximum_observed', 0)))
         sys.exit(2)
     elif data['cpu_percentage'] < WARNING:
-        print('CPU CREDIT BALANCE WARNING: %.3f / %.3f' % (data.get('latest_balance', 0), data.get('maximum_observed', 0))
+        print('CPU CREDIT BALANCE WARNING: %.3f / %.3f' % (data.get('latest_balance', 0), data.get('maximum_observed', 0)))
         sys.exit(1)
     else:
-        print('CPU CREDIT BALANCE OK: %.3f / %.3f' % (data.get('latest_balance', 0), data.get('maximum_observed', 0))
+        print('CPU CREDIT BALANCE OK: %.3f / %.3f' % (data.get('latest_balance', 0), data.get('maximum_observed', 0)))
         sys.exit(0)
 else:
     print('CPU CREDIT BALANCE UNKNOWN: ' + args.url)
