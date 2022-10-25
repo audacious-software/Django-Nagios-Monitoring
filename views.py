@@ -166,7 +166,7 @@ def other_issues(request): # pylint: disable=unused-argument
                         status=200)
 
 # @allowed_host
-def aws_ec2_remaining_credits(request, instance_id): # pylint: disable=unused-argument, too-many-locals
+def aws_ec2_remaining_credits(request, instance_id, region_id=None): # pylint: disable=unused-argument, too-many-locals
     proceed = True
 
     warnings = []
@@ -195,15 +195,16 @@ def aws_ec2_remaining_credits(request, instance_id): # pylint: disable=unused-ar
         end = timezone.now()
         start = end - datetime.timedelta(days=7)
 
+        if region_id is None:
+            region_id = settings.MONITOR_AWS_REGION
+
         aws_config = Config(
-            region_name=settings.MONITOR_AWS_REGION,
+            region_name=region_id,
             retries={'max_attempts': 10, 'mode': 'standard'}
         )
 
         os.environ['AWS_ACCESS_KEY_ID'] = settings.MONITOR_AWS_ACCESS_KEY_ID
         os.environ['AWS_SECRET_ACCESS_KEY'] = settings.MONITOR_AWS_SECRET_ACCESS_KEY
-
-        client = boto3.client('cloudwatch', config=aws_config)
 
         client = boto3.client('cloudwatch', config=aws_config)
 
