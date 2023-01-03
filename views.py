@@ -131,7 +131,6 @@ def background_jobs(request): # pylint: disable=unused-argument
         elif event.is_warning():
             warnings.append(event.event_name)
 
-
     payload = {
         'errors': errors,
         'warnings': warnings,
