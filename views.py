@@ -31,7 +31,7 @@ def allowed_host(function):
         allowed = True
 
         try:
-            allowed = (ip_address in settings.NAGIOS_MONITOR_ALLOWED_HOSTS)
+            allowed = (ip_address in settings.NAGIOS_MONITOR_ALLOWED_HOSTS) # pylint: disable=superfluous-parens
         except AttributeError:
             pass
 

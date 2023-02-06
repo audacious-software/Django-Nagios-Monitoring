@@ -21,7 +21,7 @@ class ScheduledEvent(models.Model):
         if self.last_seen is None:
             return True
 
-        warning_time = timezone.now() - datetime.timedelta(seconds=(self.warning_minutes * 60))
+        warning_time = timezone.now() - datetime.timedelta(seconds=(self.warning_minutes * 60)) # pylint: disable=superfluous-parens
 
         return warning_time > self.last_seen
 
@@ -29,7 +29,7 @@ class ScheduledEvent(models.Model):
         if self.last_seen is None:
             return True
 
-        error_time = timezone.now() - datetime.timedelta(seconds=(self.error_minutes * 60))
+        error_time = timezone.now() - datetime.timedelta(seconds=(self.error_minutes * 60)) # pylint: disable=superfluous-parens
 
         return error_time > self.last_seen
 
