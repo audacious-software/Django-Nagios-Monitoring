@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from __future__ import print_function
+
 import argparse
 import json
 import sys
@@ -15,9 +17,9 @@ response = urllib2.urlopen(args.url) # nosec
 data = json.load(response)
 
 if data['issues']:
-    print 'OTHER ISSUES: ' + ','.join(data['issues'])
+    print('OTHER ISSUES: %s' %','.join(data['issues']))
     sys.exit(2)
 
-print 'NO OTHER ISSUES'
+print('NO OTHER ISSUES')
 
 sys.exit(0)
