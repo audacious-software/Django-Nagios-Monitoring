@@ -7,6 +7,8 @@ workflows:
   build:
     jobs:
       - build-38
+      - build-37
+      - build-36
       - build-27
 
 jobs:
@@ -30,6 +32,8 @@ jobs:
           command: |
             sudo apt-get update && sudo apt-get install -y gdal-bin
             python3 -m venv /home/circleci/venv --copies
+            pip install -U pip
+            pip install wheel
             . /home/circleci/venv/bin/activate
             pip install --upgrade pip
             pip install wheel
@@ -50,6 +54,106 @@ jobs:
             bandit -r .      
       - save_cache:
           key: venv-38-{{ .Branch }}-{{ checksum "/home/circleci/django/nm/nagios_monitor/requirements.txt" }}-v1
+          paths:
+            - "/home/circleci/venv"
+      - store_test_results:
+          path: test-results/
+      - store_artifacts:
+          path: test-reports/
+          destination: python_app
+
+  build-37:
+    docker:
+      - image: cimg/python:3.7
+      - image: cimg/postgres:9.6-postgis
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - checkout
+      - restore_cache:
+          key: venv-37-{{ .Branch }}-{{ checksum "requirements.txt" }}-v1
+      - run:
+          name: Build and validate
+          command: |
+            sudo apt-get update && sudo apt-get install -y gdal-bin
+            python3 -m venv /home/circleci/venv --copies
+            pip install -U pip
+            pip install wheel
+            . /home/circleci/venv/bin/activate
+            pip install --upgrade pip
+            pip install wheel
+            pip install -r requirements.txt --progress-bar off
+            cd ..
+            mv project nagios_monitor
+            mkdir django
+            cd django
+            django-admin.py startproject nm
+            mv ../nagios_monitor nm
+            cd nm
+            cp nagios_monitor/circle_settings.py nm/settings.py
+            cp nagios_monitor/circle_urls.py nm/urls.py
+            python manage.py migrate
+            python manage.py test
+            cp nagios_monitor/.pylintrc .
+            pylint nagios_monitor
+            bandit -r .      
+      - save_cache:
+          key: venv-37-{{ .Branch }}-{{ checksum "/home/circleci/django/nm/nagios_monitor/requirements.txt" }}-v1
+          paths:
+            - "/home/circleci/venv"
+      - store_test_results:
+          path: test-results/
+      - store_artifacts:
+          path: test-reports/
+          destination: python_app
+
+  build-36:
+    docker:
+      - image: cimg/python:3.6
+      - image: cimg/postgres:9.6-postgis
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - checkout
+      - restore_cache:
+          key: venv-36-{{ .Branch }}-{{ checksum "requirements.txt" }}-v1
+      - run:
+          name: Build and validate
+          command: |
+            sudo apt-get update && sudo apt-get install -y gdal-bin
+            python3 -m venv /home/circleci/venv --copies
+            pip install -U pip
+            pip install wheel
+            . /home/circleci/venv/bin/activate
+            pip install --upgrade pip
+            pip install wheel
+            pip install -r requirements.txt --progress-bar off
+            cd ..
+            mv project nagios_monitor
+            mkdir django
+            cd django
+            django-admin.py startproject nm
+            mv ../nagios_monitor nm
+            cd nm
+            cp nagios_monitor/circle_settings.py nm/settings.py
+            cp nagios_monitor/circle_urls.py nm/urls.py
+            python manage.py migrate
+            python manage.py test
+            cp nagios_monitor/.pylintrc .
+            pylint nagios_monitor
+            bandit -r .      
+      - save_cache:
+          key: venv-36-{{ .Branch }}-{{ checksum "/home/circleci/django/nm/nagios_monitor/requirements.txt" }}-v1
           paths:
             - "/home/circleci/venv"
       - store_test_results:
