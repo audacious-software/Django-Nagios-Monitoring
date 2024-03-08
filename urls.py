@@ -1,6 +1,11 @@
 # pylint: disable=line-too-long
 
-from django.conf.urls import url
+import sys
+
+if sys.version_info[0] > 2:
+    from django.urls import re_path as url
+else:
+    from django.conf.urls import url
 
 from .views import cpu_load, current_users, disk_usage, total_processes, zombie_processes, \
                    background_jobs, other_issues, aws_ec2_remaining_credits
