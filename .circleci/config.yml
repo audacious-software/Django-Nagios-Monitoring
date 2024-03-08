@@ -43,7 +43,7 @@ jobs:
             mv project nagios_monitor
             mkdir django
             cd django
-            django-admin.py startproject nm
+            django-admin startproject nm
             mv ../nagios_monitor nm
             cd nm
             cp nagios_monitor/circle_settings.py nm/settings.py
@@ -93,7 +93,7 @@ jobs:
             mv project nagios_monitor
             mkdir django
             cd django
-            django-admin.py startproject nm
+            django-admin startproject nm
             mv ../nagios_monitor nm
             cd nm
             cp nagios_monitor/circle_settings.py nm/settings.py
