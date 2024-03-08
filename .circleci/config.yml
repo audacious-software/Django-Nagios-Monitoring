@@ -6,6 +6,7 @@ orbs:
 workflows:
   build:
     jobs:
+      - build-310
       - build-38
       - build-37
       - build-36
