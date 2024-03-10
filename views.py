@@ -242,8 +242,7 @@ def aws_ec2_remaining_credits(request, instance_id, region_id=None): # pylint: d
 
                 latest_average = average
 
-            if maximum > largest_maximum:
-                largest_maximum = maximum
+            largest_maximum = max(largest_maximum, maximum)
 
         if largest_maximum > 0:
             payload['credits_remaining'] = latest_average / largest_maximum
