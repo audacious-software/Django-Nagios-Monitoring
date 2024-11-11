@@ -5,7 +5,8 @@ from __future__ import print_function
 import argparse
 import json
 import sys
-import urllib2
+
+from urllib.request import urlopen
 
 parser = argparse.ArgumentParser(description='Checks that no other issues are present.')
 
@@ -13,7 +14,7 @@ parser.add_argument('url', help='URL of remote endpoint to check.')
 
 args = parser.parse_args()
 
-response = urllib2.urlopen(args.url) # nosec
+response = urlopen(args.url) # nosec
 data = json.load(response)
 
 if data['issues']:

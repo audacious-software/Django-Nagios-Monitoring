@@ -8,7 +8,7 @@ import argparse
 import json
 import sys
 
-import urllib2
+from urllib.request import urlopen
 
 CRITICAL = 90
 WARNING = 80
@@ -19,8 +19,8 @@ parser.add_argument('url', help='URL of remote endpoint.')
 
 args = parser.parse_args()
 
-response = urllib2.urlopen(args.url) # nosec
-data = json.load(response)   
+response = urlopen(args.url) # nosec
+data = json.load(response)
 
 max_percentage = 0
 max_device = None
