@@ -8,7 +8,7 @@ import argparse
 import json
 import sys
 
-import urllib2
+from urllib.request import urlopen
 
 CRITICAL = 350
 WARNING = 300
@@ -21,7 +21,7 @@ parser.add_argument('--warning', help='Number of processes to trigger warning al
 
 args = parser.parse_args()
 
-response = urllib2.urlopen(args.url) # nosec
+response = urlopen(args.url) # nosec
 data = json.load(response)
 
 if 'count' in data:
