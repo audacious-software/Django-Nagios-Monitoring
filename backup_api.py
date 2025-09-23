@@ -6,6 +6,8 @@ import os
 import sys
 import tempfile
 
+import six
+
 from django.conf import settings
 from django.core import management
 from django.utils.text import slugify
@@ -35,7 +37,7 @@ def incremental_backup(parameters):
         pass
 
     for app in dumpdata_apps:
-        print('[nagios_monitor] Backing up ' + app + '...')
+        six.print_('[nagios_monitor] Backing up ' + app + '...')
         sys.stdout.flush()
 
         buf = io.StringIO()
