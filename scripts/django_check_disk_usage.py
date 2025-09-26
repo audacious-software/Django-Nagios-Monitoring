@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from builtins import str # pylint: disable=redefined-builtin
-
 import argparse
 import json
 import sys
