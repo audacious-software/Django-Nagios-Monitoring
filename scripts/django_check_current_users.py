@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 from builtins import str # pylint: disable=redefined-builtin
 
 import argparse
@@ -9,6 +7,8 @@ import json
 import sys
 
 from urllib.request import urlopen
+
+import six
 
 CRITICAL = 5
 WARNING = 2
@@ -24,14 +24,14 @@ data = json.load(response)
 
 if 'count' in data:
     if data['count'] > CRITICAL:
-        print('USERS CRITICAL: ' + str(data['count']))
+        six.print_('USERS CRITICAL: ' + str(data['count']))
         sys.exit(2)
     elif data['count'] > WARNING:
-        print('USERS WARNING: ' + str(data['count']))
+        six.print_('USERS WARNING: ' + str(data['count']))
         sys.exit(1)
     else:
-        print('USERS OK: ' + str(data['count']))
+        six.print_('USERS OK: ' + str(data['count']))
         sys.exit(0)
 else:
-    print('USERS UNKNOWN: ' + args.url)
+    six.print_('USERS UNKNOWN: ' + args.url)
     sys.exit(3)

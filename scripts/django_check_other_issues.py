@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 import argparse
 import json
 import sys
 
 from urllib.request import urlopen
+
+import six
 
 parser = argparse.ArgumentParser(description='Checks that no other issues are present.')
 
@@ -18,9 +18,9 @@ response = urlopen(args.url) # nosec
 data = json.load(response)
 
 if data['issues']:
-    print('OTHER ISSUES: %s' %','.join(data['issues']))
+    six.print_('OTHER ISSUES: %s' %','.join(data['issues']))
     sys.exit(2)
 
-print('NO OTHER ISSUES')
+six.print_('NO OTHER ISSUES')
 
 sys.exit(0)

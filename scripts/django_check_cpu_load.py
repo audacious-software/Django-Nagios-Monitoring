@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 from builtins import str  # pylint: disable=redefined-builtin
 
 import argparse
@@ -9,6 +7,8 @@ import json
 import sys
 
 from urllib.request import urlopen
+
+import six
 
 CRITICAL = 90
 WARNING = 75
@@ -24,14 +24,14 @@ data = json.load(response)
 
 if 'cpu_percentage' in data:
     if data['cpu_percentage'] > CRITICAL:
-        print('CPU LOAD CRITICAL: ' + str(data['cpu_percentage']) + '%')
+        six.print_('CPU LOAD CRITICAL: ' + str(data['cpu_percentage']) + '%')
         sys.exit(2)
     elif data['cpu_percentage'] > WARNING:
-        print('CPU LOAD WARNING: ' + str(data['cpu_percentage']) + '%')
+        six.print_('CPU LOAD WARNING: ' + str(data['cpu_percentage']) + '%')
         sys.exit(1)
     else:
-        print('CPU LOAD OK: ' + str(data['cpu_percentage']) + '%')
+        six.print_('CPU LOAD OK: ' + str(data['cpu_percentage']) + '%')
         sys.exit(0)
 else:
-    print('CPU LOAD UNKNOWN: ' + args.url)
+    six.print_('CPU LOAD UNKNOWN: ' + args.url)
     sys.exit(3)
