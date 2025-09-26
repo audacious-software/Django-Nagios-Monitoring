@@ -47,9 +47,27 @@ def allowed_host(function):
 
 @allowed_host
 def cpu_load(request): # pylint: disable=unused-argument
+    cpu_percentage = psutil.cpu_percent(interval=1)
+
     payload = {
-        'cpu_percentage': psutil.cpu_percent(interval=1)
+        'cpu_percentage': cpu_percentage,
+        'cpu_status': 'normal',
     }
+
+    critical = 95
+
+    if hasattr(settings, 'NAGIOS_MONITOR_CPU_CRITICAL'):
+        critical = settings.NAGIOS_MONITOR_CPU_CRITICAL
+
+    warning = 80
+
+    if hasattr(settings, 'NAGIOS_MONITOR_CPU_WARNING'):
+        warning = settings.NAGIOS_MONITOR_CPU_WARNING
+
+    if cpu_percentage >= critical:
+        payload['cpu_status'] = 'critical'
+    elif cpu_percentage >= warning:
+        payload['cpu_status'] = 'warning'
 
     return HttpResponse(json.dumps(payload, indent=2), \
                         content_type='application/json', \
