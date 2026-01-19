@@ -40,7 +40,7 @@ MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'nagios_monitor.circle_urls'
+ROOT_URLCONF = 'nagios_monitor.urls'
 
 TEMPLATES = [
     {
