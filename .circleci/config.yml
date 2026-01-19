@@ -47,8 +47,8 @@ jobs:
             django-admin startproject nm
             mv ../nagios_monitor nm
             cd nm
-            cp nagios_monitor/circle_settings.py nm/settings.py
-            cp nagios_monitor/circle_urls.py nm/urls.py
+            cp nagios_monitor/.circleci/circle_settings.py nm/settings.py
+            cp nagios_monitor/.circleci/circle_urls.py nm/urls.py
             python manage.py migrate
             python manage.py test
             cp nagios_monitor/.pylintrc .
@@ -97,8 +97,8 @@ jobs:
             django-admin startproject nm
             mv ../nagios_monitor nm
             cd nm
-            cp nagios_monitor/circle_settings.py nm/settings.py
-            cp nagios_monitor/circle_urls.py nm/urls.py
+            cp nagios_monitor/.circleci/circle_settings.py nm/settings.py
+            cp nagios_monitor/.circleci/circle_urls.py nm/urls.py
             python manage.py migrate
             python manage.py test
             cp nagios_monitor/.pylintrc .
@@ -147,8 +147,8 @@ jobs:
             django-admin startproject nm
             mv ../nagios_monitor nm
             cd nm
-            cp nagios_monitor/circle_settings.py nm/settings.py
-            cp nagios_monitor/circle_urls.py nm/urls.py
+            cp nagios_monitor/.circleci/circle_settings.py nm/settings.py
+            cp nagios_monitor/.circleci/circle_urls.py nm/urls.py
             python manage.py migrate
             python manage.py test
             cp nagios_monitor/.pylintrc .
@@ -197,8 +197,8 @@ jobs:
             django-admin.py startproject nm
             mv ../nagios_monitor nm
             cd nm
-            cp nagios_monitor/circle_settings.py nm/settings.py
-            cp nagios_monitor/circle_urls.py nm/urls.py
+            cp nagios_monitor/.circleci/circle_settings.py nm/settings.py
+            cp nagios_monitor/.circleci/circle_urls.py nm/urls.py
             python manage.py migrate
             python manage.py test
             cp nagios_monitor/.pylintrc .
@@ -247,8 +247,8 @@ jobs:
             django-admin.py startproject nm
             mv ../nagios_monitor nm
             cd nm
-            cp nagios_monitor/circle_settings.py nm/settings.py
-            cp nagios_monitor/circle_urls.py nm/urls.py
+            cp nagios_monitor/.circleci/circle_settings.py nm/settings.py
+            cp nagios_monitor/.circleci/circle_urls.py nm/urls.py
             python manage.py migrate
             python manage.py test
             cp nagios_monitor/.pylintrc .
@@ -293,8 +293,8 @@ jobs:
             django-admin.py startproject nm
             mv ../nagios_monitor nm
             cd nm
-            cp nagios_monitor/circle_settings.py nm/settings.py
-            cp nagios_monitor/circle_urls.py nm/urls.py
+            cp nagios_monitor/.circleci/circle_settings.py nm/settings.py
+            cp nagios_monitor/.circleci/circle_urls.py nm/urls.py
             python manage.py migrate
             python manage.py test
             cp nagios_monitor/.pylintrc .
